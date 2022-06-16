@@ -74,12 +74,16 @@
         </el-table-column>
         <el-table-column label="Thời gian tạo" width="200">
           <template slot-scope="scope">
-            <span>{{ moment(scope.row.createdAt).format('HH:mm - DD-MM-YYYY') }}</span>
+            <span>{{
+              moment(scope.row.createdAt).format('HH:mm - DD-MM-YYYY')
+            }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Thời gian chỉnh sửa" width="200">
           <template slot-scope="scope">
-            <span>{{ moment(scope.row.updatedAt).format('HH:mm - DD-MM-YYYY') }}</span>
+            <span>{{
+              moment(scope.row.updatedAt).format('HH:mm - DD-MM-YYYY')
+            }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -186,11 +190,20 @@ export default {
     },
     createNew() {
       const _this = this
+      const page = document.querySelector('.navbar .bottom h3')
+      page.textContent = 'Tạo mới thương hiệu'
+      localStorage.removeItem('namePage')
+      localStorage.setItem('namePage', 'Tạo mới thương hiệu')
       _this.$router.push('company/id')
     },
-    editDetail(id, row) {
+    editDetail(id) {
       const _this = this
-      _this.$router.push({ path: `company/id=?${id}`, query: { company: row } })
+      localStorage.setItem('companyDetail', id)
+      const page = document.querySelector('.navbar .bottom h3')
+      page.textContent = 'Cập nhật thương hiệu'
+      localStorage.removeItem('namePage')
+      localStorage.setItem('namePage', 'Cập nhật thương hiệu')
+      _this.$router.push({ path: `company/id=?${id}` })
     },
     filter() {
       const _this = this

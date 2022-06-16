@@ -1,9 +1,9 @@
 <template>
   <div class="user-admin-page">
-    <div class="container" style="padding: 30px 0">
+    <!-- <div class="container" style="padding: 30px 0">
       <h2 v-if="$route.params.id === 'id'">Tạo mới bài viết</h2>
       <h2 v-else>Cập nhật bài viết</h2>
-    </div>
+    </div> -->
     <div class="container" style="padding-bottom: 20px">
       <div class="row" style="justify-content: flex-end">
         <el-button icon="el-icon-error" @click="backPage()" class="back-button"
@@ -164,11 +164,12 @@ export default {
   methods: {
     async getData() {
       const _this = this
+      const blogId = localStorage.getItem('blogDetail')
       if (_this.$route?.params?.id === 'id') {
         _this.formData = new Blog()
       } else {
         await apiServices
-          .getBlogById(_this.$route?.query?.blog._id)
+          .getBlogById(blogId)
           .then((res) => {
             _this.formData = res?.data?.data
             console.log(_this.formData)
@@ -180,6 +181,12 @@ export default {
     },
     backPage() {
       const _this = this
+      const page = document.querySelector('.navbar .bottom h3')
+      page.textContent = 'Quản lí bài viết'
+      localStorage.removeItem('namePage')
+      localStorage.setItem('namePage', 'Quản lí bài viết')
+      localStorage.removeItem('menu')
+      localStorage.setItem('menu', 'Bài viết')
       _this.$router.push('/blog')
     },
     async handleSave() {

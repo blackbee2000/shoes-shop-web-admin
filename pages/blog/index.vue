@@ -29,9 +29,7 @@
           >
             Xuất excel
           </export-excel>
-          <el-button
-            class="btn-primary-add"
-            @click="createNew()"
+          <el-button class="btn-primary-add" @click="createNew()"
             >Tạo mới</el-button
           >
         </div>
@@ -87,12 +85,16 @@
         </el-table-column>
         <el-table-column label="Thời gian tạo">
           <template slot-scope="scope">
-            <span>{{ moment(scope.row.createdAt).format('HH:mm - DD-MM-YYYY') }}</span>
+            <span>{{
+              moment(scope.row.createdAt).format('HH:mm - DD-MM-YYYY')
+            }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Thời gian chỉnh sửa" width="200">
           <template slot-scope="scope">
-            <span>{{ moment(scope.row.updatedAt).format('HH:mm - DD-MM-YYYY') }}</span>
+            <span>{{
+              moment(scope.row.updatedAt).format('HH:mm - DD-MM-YYYY')
+            }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -202,11 +204,20 @@ export default {
     },
     createNew() {
       const _this = this
+      const page = document.querySelector('.navbar .bottom h3')
+      page.textContent = 'Tạo mới bài viết'
+      localStorage.removeItem('namePage')
+      localStorage.setItem('namePage', 'Tạo mới bài viết')
       _this.$router.push('blog/id')
     },
-    editDetail(id, row) {
+    editDetail(id) {
       const _this = this
-      _this.$router.push({ path: `blog/id=?${id}`, query: { blog: row } })
+      localStorage.setItem('blogDetail', id)
+      const page = document.querySelector('.navbar .bottom h3')
+      page.textContent = 'Cập nhật bài viết'
+      localStorage.removeItem('namePage')
+      localStorage.setItem('namePage', 'Cập nhật bài viết')
+      _this.$router.push({ path: `blog/id=?${id}` })
     },
     filter() {
       const _this = this

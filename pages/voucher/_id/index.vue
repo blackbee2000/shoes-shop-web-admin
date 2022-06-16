@@ -87,7 +87,6 @@
             <label class="label">Thời gian hết hạn</label>
             <br />
             <el-date-picker
-
               v-model="formData.expiry"
               type="datetime"
               style="width: 100%"
@@ -167,12 +166,12 @@ export default {
   methods: {
     async getData() {
       const _this = this
+      const voucherId = localStorage.getItem('voucherDetail')
       if (_this.$route?.params?.id === 'id') {
         _this.formData = new Voucher()
       } else {
-        console.log('UPDATE', _this.$route?.query?.voucher._id)
         await apiServices
-          .getVoucherById(_this.$route?.query?.voucher._id)
+          .getVoucherById(voucherId)
           .then((res) => {
             _this.formData = res?.data?.data
             console.log(_this.formData)
@@ -184,6 +183,12 @@ export default {
     },
     backPage() {
       const _this = this
+      const page = document.querySelector('.navbar .bottom h3')
+      page.textContent = 'Quản lí phiếu giảm giá'
+      localStorage.removeItem('namePage')
+      localStorage.setItem('namePage', 'Quản phiếu giảm giá')
+      localStorage.removeItem('menu')
+      localStorage.setItem('menu', 'Phiếu giảm giá')
       _this.$router.push('/voucher')
     },
     async handleSave() {

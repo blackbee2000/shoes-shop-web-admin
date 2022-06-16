@@ -1,9 +1,9 @@
 <template>
   <div class="user-admin-page">
-    <div class="container" style="padding: 30px 0">
+    <!-- <div class="container" style="padding: 30px 0">
       <h2 v-if="$route.params.id === 'id'">Tạo mới thương hiệu</h2>
       <h2 v-else>Chỉnh sửa thương hiệu</h2>
-    </div>
+    </div> -->
     <div class="container" style="padding-bottom: 20px">
       <div class="row" style="justify-content: flex-end">
         <el-button icon="el-icon-error" @click="backPage()" class="back-button"
@@ -91,11 +91,12 @@ export default {
   methods: {
     async getData() {
       const _this = this
+      const companyId = localStorage.getItem('companyDetail')
       if (_this.$route?.params?.id === 'id') {
         _this.formData = new Company()
       } else {
         await apiServices
-          .getCompanyById(_this.$route?.query?.company._id)
+          .getCompanyById(companyId)
           .then((res) => {
             _this.formData = res?.data?.data
             console.log(_this.formData)
@@ -107,6 +108,12 @@ export default {
     },
     backPage() {
       const _this = this
+      const page = document.querySelector('.navbar .bottom h3')
+      page.textContent = 'Quản lí thương hiệu'
+      localStorage.removeItem('namePage')
+      localStorage.setItem('namePage', 'Quản lí thương hiệu')
+      localStorage.removeItem('menu')
+      localStorage.setItem('menu', 'Thương hiệu')
       _this.$router.push('/company')
     },
     async handleSave() {

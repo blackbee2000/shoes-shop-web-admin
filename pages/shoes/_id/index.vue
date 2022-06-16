@@ -1,9 +1,9 @@
 <template>
   <div class="user-admin-page">
-    <div class="container" style="padding: 30px 0">
+    <!-- <div class="container" style="padding: 30px 0">
       <h2 v-if="$route.params.id === 'id'">Tạo mới sản phẩm</h2>
       <h2 v-else>Cập nhật sản phẩm</h2>
-    </div>
+    </div> -->
     <div class="container" style="padding-bottom: 20px">
       <div class="row" style="justify-content: flex-end">
         <el-button icon="el-icon-error" @click="backPage()" class="back-button"
@@ -29,12 +29,6 @@
             ></el-input>
           </div>
         </div>
-        <!-- <div class="col-md-6">
-          <div class="form-item" style="margin-top: 20px">
-            <label class="label">Đánh giá</label>
-            <el-rate v-model="formData.rating" :colors="colors"> </el-rate>
-          </div>
-        </div> -->
       </div>
       <div class="row">
         <div class="col-md-6">
@@ -295,12 +289,13 @@ export default {
   methods: {
     async getData() {
       const _this = this
+      const shoesDetailId = localStorage.getItem('shoesDetail')
       if (_this.$route?.params?.id === 'id') {
         _this.formData = new Product()
         _this.typeProduct = []
       } else {
         await apiServices
-          .getProductById(_this.$route?.query?.shoes._id)
+          .getProductById(shoesDetailId)
           .then((res) => {
             _this.formData = res?.data?.data
             _this.typeProduct = res?.data?.data?.type
@@ -325,6 +320,12 @@ export default {
     },
     backPage() {
       const _this = this
+      const page = document.querySelector('.navbar .bottom h3')
+      page.textContent = 'Quản lí giày'
+      localStorage.removeItem('namePage')
+      localStorage.setItem('namePage', 'Quản lí giày')
+      localStorage.removeItem('menu')
+      localStorage.setItem('menu', 'Giày')
       _this.$router.push('/shoes')
     },
     async handleSave() {

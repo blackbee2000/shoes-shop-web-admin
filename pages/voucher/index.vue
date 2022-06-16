@@ -89,7 +89,9 @@
         </el-table-column>
         <el-table-column label="Thời gian hết hạn" width="200">
           <template slot-scope="scope">
-            <span>{{ moment(scope.row.expiry).format('HH:mm - DD-MM-YYYY') }}</span>
+            <span>{{
+              moment(scope.row.expiry).format('HH:mm - DD-MM-YYYY')
+            }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Thời gian tạo" width="200">
@@ -213,11 +215,20 @@ export default {
     },
     createNew() {
       const _this = this
+      const page = document.querySelector('.navbar .bottom h3')
+      page.textContent = 'Tạo mới phiếu giảm giá'
+      localStorage.removeItem('namePage')
+      localStorage.setItem('namePage', 'Tạo mới phiếu giảm giá')
       _this.$router.push('voucher/id')
     },
-    editDetail(id, row) {
+    editDetail(id) {
       const _this = this
-      _this.$router.push({ path: `voucher/id=?${id}`, query: { voucher: row } })
+      localStorage.setItem('voucherDetail', id)
+      const page = document.querySelector('.navbar .bottom h3')
+      page.textContent = 'Cập nhật phiếu giảm giá'
+      localStorage.removeItem('namePage')
+      localStorage.setItem('namePage', 'Cập nhật phiếu giảm giá')
+      _this.$router.push({ path: `voucher/id=?${id}` })
     },
     filter() {
       const _this = this

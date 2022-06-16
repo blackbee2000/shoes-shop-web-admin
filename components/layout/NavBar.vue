@@ -70,7 +70,6 @@ export default {
       const _this = this
       _this.namePage = 'Đổi mật khẩu'
       localStorage.removeItem('namePage')
-      localStorage.setItem('namePage', 'Đổi mật khẩu')
       localStorage.removeItem('menu')
       await _this.$router.push('changePassword')
     },
@@ -78,7 +77,6 @@ export default {
       const _this = this
       _this.namePage = 'Cập nhật hồ sơ'
       localStorage.removeItem('namePage')
-      localStorage.setItem('namePage', 'Cập nhật hồ sơ')
       localStorage.removeItem('menu')
       await _this.$router.push('editProfile')
     },
